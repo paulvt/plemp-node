@@ -13,7 +13,8 @@ var express = require("express"),
     util = require("util")
 
 // Set up the Node Express application.
-var app = express.createServer(form({ keepExtensions: true}));
+var app = express.createServer(form({ keepExtensions: true,
+                                      uploadDir: __dirname + '/upload' }));
 
 // Application settings and middleware configuration.
 app.configure(function() {
@@ -52,14 +53,8 @@ app.post('/upload', function(req, res, next) {
       next(err);
     }
     else {
-      var is = fs.createReadStream(files.file.path);
-      var os = fs.createWriteStream('upload/' + files.file.filename);
-
-      util.pump(is, os, function() {
-          fs.unlinkSync(files.file.path);
-          console.log('File %s uploaded to %s', files.file.filename,
-                                                files.file.path);
-      });
+      console.log('File %s uploaded to %s', files.file.filename,
+                                            files.file.path);
     }
   });
   res.redirect('home');
