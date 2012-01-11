@@ -43,7 +43,14 @@ app.get('/', function(req, res) {
   res.redirect('/index.html');
 });
 
-// The current route: accessed through AJA requests by the main page
+// The draggable route: provides direct access to the HTML generating code
+// for draggable objects.
+app.get('/draggable/:id', function(req, res) {
+  var file = "./upload/" + req.param.id;
+  console.debug("Draggable: " + file);
+});
+
+// The current route: accessed through AJAX requests by the main page
 // for getting the current (global) state (positions) of the draggables.
 app.get('/current', function(req, res) {
   // Retrieve the current status of the draggables and return in JSON format.
