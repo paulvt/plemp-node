@@ -18,13 +18,13 @@ var app = express.createServer(form({ keepExtensions: true,
 
 var draggables = {};
 // Initialise the draggables info.
-fs.readdir('upload/', function (err, files) {
+fs.readdir(__dirname + '/upload', function (err, files) {
   if (err)
     throw(err)
   for (var i in files) {
     if (files[i][0] == ".")
       continue;
-    draggables[files[i]] = [350, 200];
+    draggables[files[i]] = {left: 350, top: 200};
   }
 });
 
