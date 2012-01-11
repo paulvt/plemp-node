@@ -4,6 +4,9 @@
     <title>Plemp!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link type="text/css" media="screen" href="/plemp.css" rel="stylesheet">
+    <script type="text/javascript" src="/jquery.js" rel="stylesheet"></script>
+    <script type="text/javascript" src="/jquery-ui.min.js" rel="stylesheet"></script>
+    <script type="text/javascript" src="/dragreg.js" rel="stylesheet"></script>
   </head>
   <body>
     <div id="header">
@@ -15,7 +18,7 @@
         <div id="add">+</div>
       </h1>
     </div>
-    <div id="add_dialog">
+    <div id="add_dialog" style="display:none;">
       <div class="background"></div>
       <form method="post" action="/upload" enctype="multipart/form-data" id="add_form">
         <h2>Plemp it!</h2>
@@ -26,7 +29,7 @@
           <input type="file" name="file" id="file"/>
         </p>
         <div class="right">
-          <input type="button" value="Cancel"/>
+          <input type="button" id="cancel" value="Cancel"/>
           <input type="submit" value="Upload!"/>
         </div>
       </form>
