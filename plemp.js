@@ -19,9 +19,9 @@ var app = express.createServer(form({ keepExtensions: true,
 // Application settings and middleware configuration.
 app.configure(function() {
   app.use(express.logger());
+  app.use(express.static(__dirname + '/public'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.static(__dirname + '/public'));
   app.use(app.router);
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
