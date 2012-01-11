@@ -4,11 +4,11 @@ $(document).ready(function() {
 });
 
 function show_add_dialog() {
-  $('#add_dialog').show(1);
+  $('#add_dialog').fadeIn('slow');
 };
 
 function hide_add_dialog() {
-  $("#add_dialog").hide(.5, function() {
+  $("#add_dialog").fadeOut('fast', function() {
     $("#add_form")[0].reset();
   });
 };
