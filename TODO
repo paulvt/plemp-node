@@ -1,0 +1,15 @@
+Plemp! ToDo
+===========
+
+* Features still missing from the Node version of Plemp!
+* Comments
+* Titles per object
+* Drag&drop uploading
+* Arbitrary file support
+* Object features:
+  - Removal
+  - Metadata exposure
+  - Downloading of original version
+  - Resizing
+* On hover bar showing the object features
+* Working video support
