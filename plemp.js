@@ -16,6 +16,18 @@ var express = require("express"),
 var app = express.createServer(form({ keepExtensions: true,
                                       uploadDir: __dirname + '/upload' }));
 
+var draggables = {};
+// Initialise the draggables info.
+fs.readdir('upload/', function (err, files) {
+  if (err)
+    throw(err)
+  for (var i in files) {
+    if (files[i][0] == ".")
+      continue;
+    draggables[files[i]] = [350, 200];
+  }
+});
+
 // Application settings and middleware configuration.
 app.configure(function() {
   app.use(express.logger());
@@ -48,11 +60,13 @@ app.get('/savepos/:id/:x-pos/:y-pos', function(req, res) {
 // be a file or some pasted text.  After upload the controler redirects to
 // the main page which includes the just uploaded file.
 app.post('/upload', function(req, res, next) {
+  console.log("text: " + req.body)
   req.form.complete(function(err, fields, files) {
     if (err) {
       next(err);
     }
     else {
+      draggables[files.file.filename] = [350,200];
       console.log('File %s uploaded to %s', files.file.filename,
                                             files.file.path);
     }
