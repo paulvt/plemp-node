@@ -46,8 +46,13 @@ app.get('/', function(req, res) {
 // The draggable route: provides direct access to the HTML generating code
 // for draggable objects.
 app.get('/draggable/:id', function(req, res) {
-  var file = "./upload/" + req.param.id;
-  console.debug("Draggable: " + file);
+  var file = "upload/" + req.params.id;
+  // Stuff taken from the Camping implementation.
+  drag = draggables[req.params.id];
+  var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
+  console.log("Draggable: " + file);
+  res.send('<img class="draggable" id="' + req.params.id + '" ' +
+                'style="' + default_style + '" src="' + file + '">');
 });
 
 // The current route: accessed through AJAX requests by the main page
