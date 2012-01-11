@@ -59,7 +59,7 @@ app.get('/current', function(req, res) {
 // The position save route: access through AJAX request by the main page
 // for committing position changes of the draggables to the database, i.e. the
 // global state.
-app.get('/savepos/:id/:x-pos/:y-pos', function(req, res) {
+app.post('/savepos/:id/:x-pos/:y-pos', function(req, res) {
   // Set the position for the file with the given ID.
 });
 
