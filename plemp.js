@@ -65,15 +65,20 @@ app.get('/current', function(req, res) {
 // The position save route: access through AJAX request by the main page
 // for committing position changes of the draggables to the database, i.e. the
 // global state.
-app.post('/savepos/:id/:x-pos/:y-pos', function(req, res) {
+app.post('/savepos/:id', function(req, res) {
   // Set the position for the file with the given ID.
+  console.log("Got position for " + req.params.id + ";" +
+              " left: " + req.body.left +
+              " top: " + req.body.top);
+  var new_pos = draggables[req.params.id];
+  new_pos.top = req.body.top;
+  new_pos.left = req.body.left;
 });
 
 // The upload route: handles uploads from the main site.  This can either
 // be a file or some pasted text.  After upload the controler redirects to
 // the main page which includes the just uploaded file.
 app.post('/upload', function(req, res, next) {
-  console.log("text: " + req.body)
   req.form.complete(function(err, fields, files) {
     if (err) {
       next(err);
