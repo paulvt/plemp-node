@@ -59,6 +59,7 @@ app.get('/draggable/:id', function(req, res) {
 // for getting the current (global) state (positions) of the draggables.
 app.get('/current', function(req, res) {
   // Retrieve the current status of the draggables and return in JSON format.
+  res.send(draggables);
 });
 
 // The position save route: access through AJAX request by the main page
