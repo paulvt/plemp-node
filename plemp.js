@@ -14,11 +14,11 @@ var express = require("express"),
 
 // Set up the Node Express application.
 var app = express.createServer(form({ keepExtensions: true,
-                                      uploadDir: __dirname + '/upload' }));
+                                      uploadDir: __dirname + '/public/upload' }));
 
 var draggables = {};
 // Initialise the draggables info.
-fs.readdir(__dirname + '/upload', function (err, files) {
+fs.readdir(__dirname + '/public/upload', function (err, files) {
   if (err)
     throw(err)
   for (var i in files) {
@@ -46,7 +46,7 @@ app.get('/', function(req, res) {
 // The draggable route: provides direct access to the HTML generating code
 // for draggable objects.
 app.get('/draggable/:id', function(req, res) {
-  var file = "upload/" + req.params.id;
+  var file = "public/upload/" + req.params.id;
   // Stuff taken from the Camping implementation.
   drag = draggables[req.params.id];
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
