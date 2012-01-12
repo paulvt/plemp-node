@@ -2,6 +2,7 @@ Plemp! ToDo
 ===========
 
 * Features still missing from the Node version of Plemp!
+* Improve typing of uploaded snippets of text/code (e.g. like github:gist)
 * Comments
 * Titles per object
 * Drag&drop uploading
