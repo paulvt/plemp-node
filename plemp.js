@@ -11,7 +11,8 @@ var express = require("express"),
     form = require("connect-form"),
     fs = require('fs'),
     path = require('path'),
-    util = require("util")
+    util = require("util"),
+    crypto = require("crypto")
 
 // Set up the Node Express application.
 var app = express.createServer(form({ keepExtensions: true,
@@ -61,12 +62,32 @@ app.post('/draggables', function(req, res) {
       next(err);
     }
     else {
-      console.log('File %s uploaded to %s', files.file.filename,
-                                            files.file.path);
-      var file_id = path.basename(files.file.path);
-      draggables[file_id] = { name: files.file.filename,
+      var file_id, file_name, file_mime;
+      if (fields.text) {
+        md5sum = crypto.createHash('md5');
+        file_id = md5sum.update(fields.text).digest('hex') + ".txt"
+        file_name = "public/upload/" + file_id;
+        file_mime = 'text/plain';
+        fs.writeFile(file_name, fields.text, function (err) {
+          if (err)
+            throw err;
+          console.log('Text saved to %s', file_name);
+        });
+        // FIXME: prevent this file being created from the start!
+        fs.unlink(files.file.path);
+      }
+      else {
+        console.log('File %s uploaded to %s', files.file.filename,
+                                              files.file.path);
+        file_id = path.basename(files.file.path);
+        file_name = files.file.filename;
+        file_mime = files.file.srcFile.mime;
+      }
+      draggables[file_id] = { name: file_name,
+                              mime: file_mime,
                               top: 200,
                               left: 350 };
+      console.dir(draggables[file_id]);
     }
   });
   res.redirect('home');
