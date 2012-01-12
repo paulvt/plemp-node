@@ -7,15 +7,14 @@ on a single canvas, for sharing, collaging or any purpose you can think of.
 Features
 --------
 
-* Uploading of image files 
+* Adding content by means of typing/pasting text
+* Uploading of image/music/video/code/text files
 * (Re)arranging of the files (not yet persistent cross sessions)
 * Some visual effects for eye candy purposes
 
 The following feature are planned but have not been ported from
 the previous Camping/Ruby application yet:
 
-* Support for music/video/code/text files
-* Adding content by means of pasting text
 * Syntax highlighting of source code files
 * Distributed management of the arrangement, i.e. everybody viewing the
   Plemp page will (with some delay) see the same arrangement

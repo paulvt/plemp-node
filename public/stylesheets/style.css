@@ -1,5 +1,9 @@
 /* CSS style file for Plemp! */
 
+pre {
+  margin: 0 0;
+}
+
 #header { 
   position: relative;
   border-bottom: thin solid gray;

@@ -7,11 +7,12 @@
 // Foundation; either version 2 of the License, or (at your option) any later
 // version.
 
-var express = require("express"),
-    form = require("connect-form"),
-    fs = require('fs'),
-    path = require('path'),
-    crypto = require("crypto")
+var express = require("express")
+  , form = require("connect-form")
+  , fs = require('fs')
+  , path = require('path')
+  , crypto = require("crypto")
+  , mime = require("mime")
 
 // Set up the Node Express application.
 var app = express.createServer(form({ keepExtensions: true,
@@ -26,7 +27,9 @@ fs.readdir(__dirname + '/public/upload', function (err, files) {
   for (var i in files) {
     if (files[i][0] == ".")
       continue;
-    draggables[files[i]] = {left: 350, top: 200};
+    draggables[files[i]] = { mime: mime.lookup(files[i]),
+                             top: 200,
+                             left: 350 };
   }
 });
 
@@ -80,13 +83,12 @@ app.post('/draggables', function(req, res) {
                                               files.file.path);
         file_id = path.basename(files.file.path);
         file_name = files.file.filename;
-        file_mime = files.file.srcFile.mime;
+        file_mime = files.file.mime;
       }
       draggables[file_id] = { name: file_name,
                               mime: file_mime,
                               top: 200,
                               left: 350 };
-      console.dir(draggables[file_id]);
     }
   });
   res.redirect('home');
@@ -95,20 +97,47 @@ app.post('/draggables', function(req, res) {
 // The draggable controller: provides direct access to the HTML
 // generating code for draggable objects.
 app.get('/draggables/:id', function(req, res) {
-  var file = "../upload/" + req.params.id;
-  console.log("Get draggable: " + file);
+  var drag_id = req.params.id;
+  var file_name = "../upload/" + req.params.id;
+  console.log("Get draggable: " + drag_id);
   // Stuff taken from the Camping implementation.
-  drag = draggables[req.params.id];
+  var drag = draggables[drag_id];
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
-  res.send('<img class="draggable" id="' + req.params.id + '" ' +
-                'style="' + default_style + '" src="' + file + '">');
+  var mime_type = drag.mime.split("/")
+  switch (mime_type[0]) {
+    case "image":
+      res.send('<img class="draggable" id="' + drag_id + '" ' +
+                    'style="' + default_style + '" src="' + file_name + '">' +
+               '</img>');
+      break;
+    case "video":
+      res.send('<video class="draggable" id="' + drag_id + '" ' +
+                      'style="' + default_style + '" src="' + file_name +
+                      '" controls="true"></video>');
+      break;
+    case "audio":
+      res.send('<audio class="draggable" id="' + drag_id + '" ' +
+                      'style="' + default_style + ';height=80px;" src="' +
+                      file_name +
+                      '" controls="true"></audio>');
+      break;
+    case "text":
+      file_contents = fs.readFileSync("public/upload/" + drag_id);
+      res.send('<div class="draggable" id="' + drag_id + '" ' +
+                    'style="' + default_style + '"><pre>' + file_contents +
+               '</pre></div>');
+    default:
+      res.send('<div class="draggable" id="' + drag_id + '" ' +
+                    'style="' + default_style + '">' + "Unknown type!" +
+               '</div>');
+  }
 });
 
 // The position save controller: access through AJAX request by the main
 // page for committing position changes of the draggables to the database,
 // i.e. the global state.
 app.post('/draggables/:id', function(req, res) {
-  console.log("Got position for draggable " + req.params.id + ";" +
+  console.log("Position update for draggable " + req.params.id + ";" +
               " left: " + req.body.left +
               " top: " + req.body.top);
   // Set the position for the file with the given ID.
