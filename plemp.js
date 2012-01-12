@@ -11,7 +11,6 @@ var express = require("express"),
     form = require("connect-form"),
     fs = require('fs'),
     path = require('path'),
-    util = require("util"),
     crypto = require("crypto")
 
 // Set up the Node Express application.
@@ -46,7 +45,7 @@ app.get('/', function(req, res) {
   res.redirect('/index.html');
 });
 
-// The retrieval controller:  accessed through AJAX requests by the main
+// The retrieval controller: accessed through AJAX requests by the main
 // page for getting/setting the state (positions) of the draggables.
 app.get('/draggables', function(req, res) {
   // Retrieve the current status of the draggables and return in JSON format.
@@ -93,19 +92,19 @@ app.post('/draggables', function(req, res) {
   res.redirect('home');
 });
 
-// The draggables controller:  provides direct access to the HTML
+// The draggable controller: provides direct access to the HTML
 // generating code for draggable objects.
 app.get('/draggables/:id', function(req, res) {
   var file = "../upload/" + req.params.id;
+  console.log("Get draggable: " + file);
   // Stuff taken from the Camping implementation.
   drag = draggables[req.params.id];
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
-  console.log("Get draggable: " + file);
   res.send('<img class="draggable" id="' + req.params.id + '" ' +
                 'style="' + default_style + '" src="' + file + '">');
 });
 
-// The position save controller:  access through AJAX request by the main
+// The position save controller: access through AJAX request by the main
 // page for committing position changes of the draggables to the database,
 // i.e. the global state.
 app.post('/draggables/:id', function(req, res) {
