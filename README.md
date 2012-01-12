@@ -64,5 +64,6 @@ library (see http://softwaremaniacs.org/soft/highlight/en/), which is
 licensed under the 3-clause BSD license: 
 https://github.com/isagalaev/highlight.js/blob/master/LICENSE.
 This pertains to the following files:
+
 * public/javascripts/highlight.pack.js
 * public/stylesheets/highlight.css
