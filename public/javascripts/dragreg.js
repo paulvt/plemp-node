@@ -2,9 +2,9 @@ $(document).ready(function() {
   $("#add").click(show_add_dialog);
   $("#add_form #cancel").click(hide_add_dialog);
 
-  $.get("current", function(data) {
+  $.get("draggables", function(data) {
     $.each(data, function(key, val) {
-       $.get("draggable/" + key, function(data) {
+       $.get("draggables/" + key, function(data) {
          $("#draggables").append(data);
          $(".draggable").draggable({ stack: "#draggables img",
                                      stop: update_drag_info });
@@ -24,5 +24,5 @@ function hide_add_dialog() {
 };
 
 function update_drag_info(event, ui) {
-  $.post("savepos/" + event.srcElement.id, ui.position, "json");
+  $.post("draggables/" + event.srcElement.id, ui.position, "json");
 }
