@@ -16,6 +16,11 @@ $(document).ready(function() {
          $("#draggables").append(data);
          $(".draggable").draggable({ stack: "#draggables img",
                                      stop: update_drag_info });
+         // FIXME: highlight text for now, until we can determine and
+         // store what everything exactly is.
+         $("pre").each(function(idx, elem) {
+           hljs.highlightBlock(elem, '  ');
+         });
        })
     })
   }, "json");
