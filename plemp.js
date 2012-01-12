@@ -126,10 +126,17 @@ app.get('/draggables/:id', function(req, res) {
       res.send('<div class="draggable" id="' + drag_id + '" ' +
                     'style="' + default_style + '"><pre>' + file_contents +
                '</pre></div>');
+      break;
+    case 'application': // FIXME: treat as code for now, but it is probably wrong
+      file_contents = fs.readFileSync("public/upload/" + drag_id);
+      res.send('<div class="draggable" id="' + drag_id + '" ' +
+                    'style="' + default_style + '"><pre><code>' + file_contents +
+               '</code></pre></div>');
+      break;
     default:
       res.send('<div class="draggable" id="' + drag_id + '" ' +
-                    'style="' + default_style + '">' + "Unknown type!" +
-               '</div>');
+                    'style="' + default_style + '">Unknown type: ' +
+               mime_type + '</div>');
   }
 });
 
