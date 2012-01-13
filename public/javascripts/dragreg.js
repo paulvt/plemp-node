@@ -39,7 +39,7 @@ function hide_add_dialog() {
 };
 
 function update_drag_info(event, ui) {
-  $.post("draggables/" + event.srcElement.id, ui.position, "json");
+  $.post("draggables/" + ui.helper.context.id, ui.position, "json");
 }
 
 function key_handler(event) {
