@@ -14,7 +14,8 @@ $(document).ready(function() {
     $.each(data, function(key, val) {
        $.get("draggables/" + key, function(data) {
          $("#draggables").append(data);
-         $(".draggable").draggable({ stack: "#draggables img",
+         $(".draggable").draggable({ stack: ".draggable",
+                                     containment: "window",
                                      stop: update_drag_info });
          // FIXME: highlight text for now, until we can determine and
          // store what everything exactly is.
