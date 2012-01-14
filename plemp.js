@@ -28,8 +28,8 @@ fs.readdir(__dirname + '/public/upload', function (err, files) {
     if (files[i][0] == ".")
       continue;
     draggables[files[i]] = { mime: mime.lookup(files[i]),
-                             top: 200,
-                             left: 350 };
+                             top: 40 + Math.random() * 360,
+                             left: 10 + Math.random() * 644 };
   }
 });
 
