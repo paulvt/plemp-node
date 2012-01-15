@@ -61,10 +61,59 @@ pre {
 
 .draggable {
   position: absolute;
+  background: white;
+  border: thin solid #888;
   padding: 10px;
+  width: 400px;
+}
+
+.draggable div,
+.draggable img,
+.draggable audio,
+.draggable video,
+.draggable pre {
   width: 400px;
   max-height: 300px;
   overflow: auto;
-  border: thin solid #888;
-  background: white;
+}
+
+.draggable pre {
+  width: 388px;
+}
+
+.draggable .header {
+  padding-bottom: 3px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.draggable .header .title {
+  width: 100%;
+  margin-right: 30px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.draggable .header .title .edit {
+  padding-left: 10px;
+  color: #cccccc;
+}
+
+.draggable .header .delete {
+  width: auto;
+  float: right;
+  padding: 0px 2px;
+  border: thin solid black;
+  color: #cccccc;
+  margin-left: 20px;
+}
+
+.draggable .header .edit:hover,
+.draggable .header .delete:hover {
+  color: #000000;
+  cursor: pointer;
+}
+
+.draggable .comments {
+  display: none;
 }

@@ -94,40 +94,39 @@ app.get('/draggables/:id', function(req, res) {
   var drag = draggables[drag_id];
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
   var mime_type = drag.mime.split("/")
+  var title = drag.name || drag.title || 'Title not set';
+  var content;
   switch (mime_type[0]) {
     case "image":
-      res.send('<img class="draggable" id="' + drag_id + '" ' +
-                    'style="' + default_style + '" src="' + file_name + '">' +
-               '</img>');
+      content = '<img src="' + file_name + '"></img>';
       break;
     case "video":
-      res.send('<video class="draggable" id="' + drag_id + '" ' +
-                      'style="' + default_style + '" src="' + file_name +
-                      '" controls="true"></video>');
+      content = '<video src="' + file_name + '" controls="true"></video>';
       break;
     case "audio":
-      res.send('<audio class="draggable" id="' + drag_id + '" ' +
-                      'style="' + default_style + ';height=80px;" src="' +
-                      file_name +
-                      '" controls="true"></audio>');
+      content = '<audio src="' + file_name + '" controls="true"></audio>';
       break;
     case "text":
       file_contents = fs.readFileSync("public/upload/" + drag_id);
-      res.send('<div class="draggable" id="' + drag_id + '" ' +
-                    'style="' + default_style + '"><pre>' + file_contents +
-               '</pre></div>');
+      content = '<pre>' + file_contents + '</pre>';
       break;
     case 'application': // FIXME: treat as code for now, but it is probably wrong
       file_contents = fs.readFileSync("public/upload/" + drag_id);
-      res.send('<div class="draggable" id="' + drag_id + '" ' +
-                    'style="' + default_style + '"><pre><code>' + file_contents +
-               '</code></pre></div>');
+      content = '<pre><code class="' + drag.type + '">' + file_contents +
+                     '</code></pre>';
       break;
     default:
-      res.send('<div class="draggable" id="' + drag_id + '" ' +
-                    'style="' + default_style + '">Unknown type: ' +
-               mime_type + '</div>');
+      content = '<span>Unknown type: ' + mime_type + '</span>';
   }
+
+  // Wrap the content in a div with title and comments.
+  res.send('<div class="draggable" id="' + drag_id + '" ' +
+                'style="' + default_style + '">' +
+             '<div class="header"><div class="title">' + title +
+                  '<span class="edit">(edit)</span>' +
+                  '<div class="delete">X</div></div>' +
+             '</div>' + content + '<div class="comments"></div>' +
+           '</div>');
 });
 
 // The position save controller: access through AJAX request by the main
