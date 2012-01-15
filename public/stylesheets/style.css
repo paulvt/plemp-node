@@ -91,7 +91,7 @@ pre {
 }
 
 .draggable .header {
-  padding-bottom: 3px;
+  padding-bottom: 5px;
   font-size: 11px;
 }
 
@@ -123,5 +123,7 @@ pre {
 }
 
 .draggable .comments {
-  display: none;
+  color: #999;
+  font-size: 11px;
+  padding-top: 5px;
 }

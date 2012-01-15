@@ -29,6 +29,10 @@ $(document).ready(function() {
                                              submit: 'OK',
                                              cancel: 'Discard',
                                              style: 'inherit' });
+         last_drag.hover(function() { $(this).find(".comments").fadeIn(); },
+                         function() { $(this).find(".comments").fadeOut(); });
+         // FIXME: get the comments!
+         last_drag.find(".comments").text("Comments (0)").hide();
          // Highlight contained code.
          last_drag.find("pre code").each(function(idx, elem) {
            hljs.highlightBlock(elem, '  ');
