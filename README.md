@@ -59,11 +59,21 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation; either version 2 of the License, or
 (at your option) any later version.
 
-*N.B.* The source code of this program includes code from the highlight.js
-library (see http://softwaremaniacs.org/soft/highlight/en/), which is
-licensed under the 3-clause BSD license: 
-https://github.com/isagalaev/highlight.js/blob/master/LICENSE.
-This pertains to the following files:
+*N.B.* The source code of this program includes code from external projects.
+
+The following files are taken from the highlight.js library (see
+http://softwaremaniacs.org/soft/highlight/en/):
 
 * public/javascripts/highlight.pack.js
 * public/stylesheets/highlight.css
+
+These files are licensed under the 3-clause BSD license:
+https://github.com/isagalaev/highlight.js/blob/master/LICENSE.
+
+The following file is taken from the library (see
+http://www.appelsiini.net/projects/jeditable):
+
+* public/javascript/jquery-jeditable.min.js
+
+This file is licensed under the MIT license:
+http://www.opensource.org/licenses/mit-license.php.
