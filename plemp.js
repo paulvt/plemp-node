@@ -142,6 +142,24 @@ app.post('/draggables/:id', function(req, res) {
   new_pos.left = req.body.left;
 });
 
+// Draggable removal controller: removes the specific draggable from the
+// database.
+app.del('/draggables/:id', function(req, res) {
+  var file_id = req.params.id;
+  console.log("Hello?");
+  fs.unlink("public/upload/" + file_id, function(err) {
+    if (err) {
+      console.log("Something went wrong while deleting " +
+                  file_id + ": " + err);
+      res.send(err);
+      throw err;
+    }
+    delete draggables[file_id];
+    console.log("Deleted draggable " + file_id);
+    res.send(true);
+  });
+});
+
 // Signal handling.
 process.on('SIGINT', function() { db.save(draggables); process.exit(0); });
 process.on('SIGTERM', function() { db.save(draggables); process.exit(0); });
