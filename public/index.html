@@ -5,10 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link type="text/css" media="screen" href="/stylesheets/highlight.css" rel="stylesheet">
     <link type="text/css" media="screen" href="/stylesheets/style.css" rel="stylesheet">
-    <script type="text/javascript" src="/javascripts/jquery.js" rel="stylesheet"></script>
-    <script type="text/javascript" src="/javascripts/jquery-ui.min.js" rel="stylesheet"></script>
-    <script type="text/javascript" src="/javascripts/highlight.pack.js" rel="stylesheet"></script>
-    <script type="text/javascript" src="/javascripts/dragreg.js" rel="stylesheet"></script>
+    <script type="text/javascript" src="/javascripts/jquery.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-jeditable.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/javascripts/highlight.pack.js"></script>
+    <script type="text/javascript" src="/javascripts/dragreg.js"></script>
   </head>
   <body>
     <div id="header">
@@ -24,6 +25,8 @@
       <div class="background"></div>
       <form method="post" action="/draggables" enctype="multipart/form-data" id="add_form">
         <h2>Plemp it!</h2>
+        <label for="new_title">Title:</label>
+        <input name="title" id="new_title" width="200">
         <p>Scribble something below:
           <select class="right" name="type" id="type">
             <option value="conf">Apache config</option>

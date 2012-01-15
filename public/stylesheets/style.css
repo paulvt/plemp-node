@@ -48,7 +48,7 @@ pre {
 #add_dialog form {
   z-index: 1001;
   width: 500px;
-  height: 390px;
+  height: 430px;
   margin: 100px auto;
   background: white;
   border: thin solid black;
@@ -57,9 +57,9 @@ pre {
   position: relative;
 }
 
-#add_dialog #type {
-  float: right;
-}
+#add_dialog #new_title { width: 300px; }
+
+#add_dialog #type { float: right; }
 
 .left  { text-align: left; }
 .right { text-align: right; }

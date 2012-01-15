@@ -22,7 +22,13 @@ $(document).ready(function() {
                                stop: update_drag_info });
          last_drag.find(".delete").click({ id: last_drag[0].id,
                                            element: last_drag },
-                                         delete_draggable);
+                                           delete_draggable);
+         last_drag.find(".title").editable('draggables/' + last_drag[0].id,
+                                           { tooltip: "Click to edit…",
+                                             name: 'title',
+                                             submit: 'OK',
+                                             cancel: 'Discard',
+                                             style: 'inherit' });
          // Highlight contained code.
          last_drag.find("pre code").each(function(idx, elem) {
            hljs.highlightBlock(elem, '  ');
@@ -49,6 +55,10 @@ function delete_draggable(event) {
     if (data)
       event.data.element.remove();
   }, "json");
+}
+
+function update_title(content, foo) {
+  console.log(foo);
 }
 
 function update_drag_info(event, ui) {
