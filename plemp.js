@@ -75,7 +75,7 @@ app.post('/draggables', function(req, res) {
         file_name = files.file.filename;
         file_mime = files.file.mime;
       }
-      draggables[file_id] = { name: file_name,
+      draggables[file_id] = { name: files.file.filename,
                               mime: file_mime,
                               top: 200,
                               left: 350 };
