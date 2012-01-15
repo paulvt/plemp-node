@@ -141,13 +141,22 @@ app.get('/draggables/:id', function(req, res) {
 // page for committing position changes of the draggables to the database,
 // i.e. the global state.
 app.post('/draggables/:id', function(req, res) {
-  console.log("Position update for draggable " + req.params.id + ";" +
-              " left: " + req.body.left +
-              " top: " + req.body.top);
-  // Set the position for the file with the given ID.
-  var new_pos = draggables[req.params.id];
-  new_pos.top = req.body.top;
-  new_pos.left = req.body.left;
+  var drag = draggables[req.params.id];
+  if (req.body.title) {
+    // It's a title update!
+    console.log("Title update for draggable " + req.params.id + ": " +
+                req.body.title);
+    drag.title = req.body.title;
+    res.send(req.body.title);
+  }
+  else {
+    // Set the position for the file with the given ID.
+    console.log("Position update for draggable " + req.params.id + ";" +
+                " left: " + req.body.left +
+                " top: " + req.body.top);
+    drag.top = req.body.top;
+    drag.left = req.body.left;
+  }
 });
 
 // Draggable removal controller: removes the specific draggable from the
