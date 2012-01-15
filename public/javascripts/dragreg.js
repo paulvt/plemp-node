@@ -59,10 +59,6 @@ function delete_draggable(event) {
   }, "json");
 }
 
-function update_title(content, foo) {
-  console.log(foo);
-}
-
 function update_drag_info(event, ui) {
   $.post("draggables/" + ui.helper.context.id, ui.position, "json");
 }
