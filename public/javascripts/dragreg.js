@@ -11,15 +11,20 @@ $(document).ready(function() {
 
   // Populate the canvas with the draggables.
   $.get("draggables", function(data) {
+    var last_drag;
     $.each(data, function(key, val) {
        $.get("draggables/" + key, function(data) {
          $("#draggables").append(data);
-         $(".draggable").draggable({ stack: ".draggable",
-                                     containment: "window",
-                                     stop: update_drag_info });
-         // FIXME: highlight text for now, until we can determine and
-         // store what everything exactly is.
-         $("pre code").each(function(idx, elem) {
+         // Assume we have appended one draggable here:
+         last_drag = $(".draggable").last();
+         last_drag.draggable({ stack: ".draggable",
+                               containment: "window",
+                               stop: update_drag_info });
+         last_drag.find(".delete").click({ id: last_drag[0].id,
+                                           element: last_drag },
+                                         delete_draggable);
+         // Highlight contained code.
+         last_drag.find("pre code").each(function(idx, elem) {
            hljs.highlightBlock(elem, '  ');
          });
        })
@@ -30,13 +35,21 @@ $(document).ready(function() {
 // Callback functions.
 function show_add_dialog() {
   $('#add_dialog').fadeIn('slow');
-};
+}
 
 function hide_add_dialog() {
   $("#add_dialog").fadeOut('fast', function() {
     $("#add_form")[0].reset();
   });
-};
+}
+
+function delete_draggable(event) {
+  drag_id = event.data.id
+  $.post("draggables/" + drag_id, {"_method": "delete"}, function(data) {
+    if (data)
+      event.data.element.remove();
+  }, "json");
+}
 
 function update_drag_info(event, ui) {
   $.post("draggables/" + ui.helper.context.id, ui.position, "json");
