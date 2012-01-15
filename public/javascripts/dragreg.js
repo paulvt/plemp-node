@@ -72,7 +72,6 @@ function key_handler(event) {
     case 27: /* Escape */
       hide_add_dialog();
       break;
-    case 16: /* Plus */
     case 187: /* Plus (numpad) */
       show_add_dialog();
       break;
