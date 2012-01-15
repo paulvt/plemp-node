@@ -10,20 +10,24 @@ pre {
   font-size: 12px;
 }
 
-#header { 
+#header {
   position: relative;
   border-bottom: thin solid gray;
   height: 100%;
 }
 
-#header h1 { 
-  margin: 5pt 0pt; 
+#header h1 {
+  margin: 5pt 0pt;
   height: 20pt;
 }
 #header #title { float: left; }
 #header #subtitle { font-size: 57%; }
-#header #add { float: right; cursor: pointer; }
-#header #add:hover { color: #888; }
+#header #add {
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+}
+#header #add:hover { color: #000; }
 
 #add_dialog {
   position: absolute;
@@ -34,15 +38,15 @@ pre {
   text-align: center;
   z-index: 999;
 }
-#add_dialog .background { 
+#add_dialog .background {
   position: absolute;
-  top: 0px; 
+  top: 0px;
   left: 0px;
   z-index: 1000;
   width: 100%;
   height: 100%;
-  background: #ddd; 
-  opacity: 0.8; 
+  background: #ddd;
+  opacity: 0.8;
 }
 
 #add_dialog form {
@@ -89,7 +93,6 @@ pre {
 .draggable .header {
   padding-bottom: 3px;
   font-size: 11px;
-  text-align: center;
 }
 
 .draggable .header .title {
@@ -101,21 +104,21 @@ pre {
 
 .draggable .header .title .edit {
   padding-left: 10px;
-  color: #cccccc;
+  color: #ccc;
 }
 
 .draggable .header .delete {
   width: auto;
   float: right;
-  padding: 0px 2px;
+  padding: 0px 3px;
   border: thin solid black;
-  color: #cccccc;
+  color: #ccc;
   margin-left: 20px;
 }
 
 .draggable .header .edit:hover,
 .draggable .header .delete:hover {
-  color: #000000;
+  color: #000;
   cursor: pointer;
 }
 
