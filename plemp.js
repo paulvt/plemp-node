@@ -21,6 +21,13 @@ var app = express.createServer(form({ keepExtensions: true,
 
 // Retrieve the draggables info.
 var draggables = db.load();
+for (drag_id in draggables) {
+  if (!path.existsSync(__dirname + "/public/upload/" + drag_id)) {
+    console.log("Could not find draggable " + drag_id +
+                "; removing from database!");
+    delete draggables[drag_id];
+  }
+}
 
 // Application settings and middleware configuration.
 app.configure(function() {
@@ -93,9 +100,9 @@ app.get('/draggables/:id', function(req, res) {
   // Stuff taken from the Camping implementation.
   var drag = draggables[drag_id];
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
-  var mime_type = drag.mime.split("/")
   var title = drag.name || drag.title || 'Title not set';
   var content;
+  var mime_type = drag.mime.split("/")
   switch (mime_type[0]) {
     case "image":
       content = '<img src="' + file_name + '"></img>';
