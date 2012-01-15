@@ -1,6 +1,6 @@
-var fs = require("fs"),
-    path = require("path"),
-    db_file = "./draggables.json";
+var fs = require("fs")
+  , path = require("path")
+  , db_file = "./draggables.json";
 
 // Saves the draggables info object to the database file (synchronously).
 function save(obj) {
