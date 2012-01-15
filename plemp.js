@@ -56,9 +56,10 @@ app.post('/draggables', function(req, res) {
       var file_id, file_name, file_mime;
       if (fields.text) {
         md5sum = crypto.createHash('md5');
-        file_id = md5sum.update(fields.text).digest('hex') + ".txt"
+        md5sum = md5sum.update(fields.text).digest('hex')
+        file_id = md5sum + "." + fields.type
         file_name = "public/upload/" + file_id;
-        file_mime = 'text/plain';
+        file_mime = mime.lookup(fields.type);
         fs.writeFile(file_name, fields.text, function (err) {
           if (err)
             throw err;
