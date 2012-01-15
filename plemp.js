@@ -8,6 +8,7 @@
 // version.
 
 var express = require("express")
+  , db = require("./db")
   , form = require("connect-form")
   , fs = require('fs')
   , path = require('path')
@@ -18,20 +19,8 @@ var express = require("express")
 var app = express.createServer(form({ keepExtensions: true,
                                       uploadDir: __dirname + '/public/upload' }));
 
-// FIXME: dummy database
-var draggables = {};
-// Initialise the draggables info.
-fs.readdir(__dirname + '/public/upload', function (err, files) {
-  if (err)
-    throw(err)
-  for (var i in files) {
-    if (files[i][0] == ".")
-      continue;
-    draggables[files[i]] = { mime: mime.lookup(files[i]),
-                             top: 40 + Math.random() * 360,
-                             left: 10 + Math.random() * 644 };
-  }
-});
+// Retrieve the draggables info.
+var draggables = db.load();
 
 // Application settings and middleware configuration.
 app.configure(function() {
@@ -152,6 +141,10 @@ app.post('/draggables/:id', function(req, res) {
   new_pos.top = req.body.top;
   new_pos.left = req.body.left;
 });
+
+// Signal handling.
+process.on('SIGINT', function() { db.save(draggables); process.exit(0); });
+process.on('SIGTERM', function() { db.save(draggables); process.exit(0); });
 
 // Start the application.
 app.listen(3300);
