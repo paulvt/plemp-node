@@ -84,6 +84,7 @@ app.post('/draggables', function(req, res) {
       }
       draggables[file_id] = { name: files.file.filename,
                               mime: file_mime,
+                              title: fields.title,
                               top: 200,
                               left: 350 };
     }
@@ -100,7 +101,7 @@ app.get('/draggables/:id', function(req, res) {
   // Stuff taken from the Camping implementation.
   var drag = draggables[drag_id];
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
-  var title = drag.name || drag.title || 'Title not set';
+  var title = drag.title || drag.name || 'Title not set';
   var content;
   var mime_type = drag.mime.split("/")
   switch (mime_type[0]) {
