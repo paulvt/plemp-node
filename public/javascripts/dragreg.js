@@ -52,8 +52,10 @@ function hide_add_dialog() {
 function delete_draggable(event) {
   drag_id = event.data.id
   $.post("draggables/" + drag_id, {"_method": "delete"}, function(data) {
-    if (data)
-      event.data.element.remove();
+    if (data) {
+      event.data.element.hide('fade', 'slow', function() {
+        event.data.element.remove () });
+    }
   }, "json");
 }
 
