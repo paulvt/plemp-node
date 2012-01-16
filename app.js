@@ -13,7 +13,7 @@ var express = require("express")
   , fs = require('fs')
   , path = require('path')
   , crypto = require("crypto")
-  , mime = require("mime")
+  , mime = require("mime");
 
 // Set up the Node Express application.
 var app = express.createServer(form({ keepExtensions: true,
@@ -38,11 +38,11 @@ app.configure(function() {
   app.use(app.router);
 });
 
-app.configure('development', function(){
+app.configure('development', function() {
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
-app.configure('production', function(){
+app.configure('production', function() {
   app.use(express.errorHandler());
 });
 
@@ -71,8 +71,8 @@ app.post('/draggables', function(req, res) {
       var file_id, file_name, file_mime;
       if (fields.text) {
         md5sum = crypto.createHash('md5');
-        md5sum = md5sum.update(fields.text).digest('hex')
-        file_id = md5sum + "." + fields.type
+        md5sum = md5sum.update(fields.text).digest('hex');
+        file_id = md5sum + "." + fields.type;
         file_name = "public/upload/" + file_id;
         file_mime = mime.lookup(fields.type);
         fs.writeFile(file_name, fields.text, function (err) {
@@ -111,7 +111,7 @@ app.get('/draggables/:id', function(req, res) {
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
   var title = drag.title || drag.name || 'Title not set';
   var content;
-  var mime_type = drag.mime.split("/")
+  var mime_type = drag.mime.split("/");
   switch (mime_type[0]) {
     case "image":
       content = '<img src="' + file_name + '"></img>';
@@ -170,7 +170,6 @@ app.post('/draggables/:id', function(req, res) {
 // database.
 app.del('/draggables/:id', function(req, res) {
   var file_id = req.params.id;
-  console.log("Hello?");
   fs.unlink("public/upload/" + file_id, function(err) {
     if (err) {
       console.log("Something went wrong while deleting " +
@@ -191,4 +190,4 @@ process.on('SIGTERM', function() { db.save(draggables); process.exit(0); });
 // Start the application.
 app.listen(3300);
 console.log('Plemp! started on http://127.0.0.1:%d/ in %s mode',
-            app.address().port, app.settings.env)
+            app.address().port, app.settings.env);

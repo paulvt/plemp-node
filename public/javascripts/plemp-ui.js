@@ -62,7 +62,7 @@ function hide_add_dialog() {
 
 // Delete a draggable on the server; remove it with a visual effect.
 function delete_draggable(event) {
-  drag_id = event.data.id
+  drag_id = event.data.id;
   $.post("draggables/" + drag_id, {"_method": "delete"}, function(data) {
     if (data) {
       event.data.element.hide('fade', 'slow', function() {
