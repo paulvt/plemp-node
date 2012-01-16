@@ -34,8 +34,9 @@ Installation
 ------------
 
 For now, Plemp! is in a developing state and not ready for site-wide
-deployment yet.  However, before running, make sure that jquery.js and are
-available from public/ either by copying or symlinking them there.
+deployment yet.  However, before running, make sure that jquery.js,
+jquery-ui.js, and jquery-ui.css with images are available from public/
+either by copying or symlinking them there.
 
 Usage
 -----

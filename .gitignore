@@ -1,4 +1,6 @@
 public/upload/*
 public/javascripts/jquery.js
-public/javascripts/jquery-ui.min.js
+public/javascripts/jquery-ui.js
+public/stylesheets/jquery-ui.css
+public/stylesheets/images
 draggables.json
