@@ -12,16 +12,15 @@ $(document).ready(function() {
   // The plempable jQuery plugin containing most of the Plemp! UI
   // functionality.
   $.fn.plempable = function(data) {
-    console.log(data);
     this.draggable({ stack: ".draggable",
                      containment: "window",
                      stop: update_drag_info })
         .hover(function() { $(this).find(".comments").fadeIn(); },
                function() { $(this).find(".comments").fadeOut(); });
-    this.find(".delete").click({ id: this.id,
+    this.find(".delete").click({ id: this.attr("id"),
                                  element: this },
                                delete_draggable);
-    this.find(".title").editable('draggables/' + this.id,
+    this.find(".title").editable('draggables/' + this.attr("id"),
                                  { tooltip: "Click to edit…",
                                    name: 'title',
                                    submit: 'OK',
