@@ -130,9 +130,9 @@ app.get('/draggables/:id', function(req, res) {
   // Wrap the content in a div with title and comments.
   res.send('<div class="draggable" id="' + drag_id + '" ' +
                 'style="' + default_style + '">' +
-             '<div class="header"><span class="title">' + title + '</span>' +
+             '<h2><span class="title">' + title + '</span>' +
                   '<div class="delete">X</div>' +
-             '</div>' + content + '<div class="comments"></div>' +
+             '</h2>' + content + '<div class="comments"></div>' +
            '</div>');
 });
 

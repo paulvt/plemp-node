@@ -90,34 +90,33 @@ pre {
   width: 388px;
 }
 
-.draggable .header {
+.draggable h2 {
+  margin: 0px;
   padding-bottom: 5px;
   font-size: 11px;
 }
 
-.draggable .header .title {
-  width: 100%;
+.draggable h2 .title {
   margin-right: 30px;
   font-weight: bold;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.draggable .header .title .edit {
-  padding-left: 10px;
-  color: #ccc;
+.draggable h2 .title form input {
+  font-size: 11px;
+  font-weight: bold;
 }
 
-.draggable .header .delete {
+.draggable h2 .delete {
   width: auto;
   float: right;
   padding: 0px 3px;
   border: thin solid black;
   color: #ccc;
-  margin-left: 20px;
 }
 
-.draggable .header .edit:hover,
-.draggable .header .delete:hover {
+.draggable h2 .delete:hover {
   color: #000;
   cursor: pointer;
 }
