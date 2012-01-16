@@ -36,8 +36,16 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
+});
+
+app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
+
+app.configure('production', function(){
+  app.use(express.errorHandler());
+});
+
 
 // Server the main index file statically for now.
 app.get('/', function(req, res) {
@@ -182,4 +190,5 @@ process.on('SIGTERM', function() { db.save(draggables); process.exit(0); });
 
 // Start the application.
 app.listen(3300);
-console.log('Plemp! started on http://127.0.0.1:%d/', app.address().port)
+console.log('Plemp! started on http://127.0.0.1:%d/ in %s mode',
+            app.address().port, app.settings.env)
