@@ -17,6 +17,7 @@ $(document).ready(function() {
                      cancel: "audio, video",
                      distance: 10,
                      stop: update_drag_info })
+        .click(raise_draggable)
         .hover(function() { $(this).find(".comments").fadeIn(); },
                function() { $(this).find(".comments").fadeOut(); });
     this.find(".delete").click({ id: this.attr("id"),
@@ -71,6 +72,16 @@ function delete_draggable(event) {
         event.data.element.remove () });
     }
   }, "json");
+}
+
+// Raise the draggable to the foreground.
+function raise_draggable(event) {
+  var max = 0;
+  $(".draggable").each(function() {
+    var cur = parseFloat($(this).css("z-index"));
+    max = cur > max ? cur : max;
+  });
+  $(this).css("z-index", max + 1);
 }
 
 // Update the position of a draggable on the server.
