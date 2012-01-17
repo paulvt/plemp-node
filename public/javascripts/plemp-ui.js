@@ -14,6 +14,8 @@ $(document).ready(function() {
   $.fn.plempable = function(data) {
     this.draggable({ stack: ".draggable",
                      containment: "window",
+                     cancel: "audio, video",
+                     distance: 10,
                      stop: update_drag_info })
         .hover(function() { $(this).find(".comments").fadeIn(); },
                function() { $(this).find(".comments").fadeOut(); });
@@ -24,7 +26,7 @@ $(document).ready(function() {
                                  { tooltip: "Click to edit…",
                                    name: 'title',
                                    submit: 'OK',
-                                   cancel: 'Discard',
+                                   cancel: 'Cancel',
                                    style: 'inherit' });
     // FIXME: actually get the comments!
     this.find(".comments").text("Comments (0)").hide();
