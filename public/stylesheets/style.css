@@ -76,19 +76,16 @@ pre {
   width: 400px;
 }
 
-.draggable div,
 .draggable img,
 .draggable audio,
-.draggable video,
-.draggable pre {
-  width: 400px;
-  max-height: 300px;
-  overflow: auto;
+.draggable video {
+  width: 100%;
 }
 
 .draggable pre {
-  width: 388px;
   font-size: 12px;
+  overflow: auto;
+  max-height: 300px;
 }
 
 .draggable h2 {
