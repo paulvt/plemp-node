@@ -65,6 +65,7 @@ app.get('/draggables', function(req, res) {
 app.post('/draggables', function(req, res) {
   req.form.complete(function(err, fields, files) {
     if (err) {
+      // FIXME: next is undefined!
       next(err);
     }
     else {
@@ -88,11 +89,12 @@ app.post('/draggables', function(req, res) {
                                               files.file.path);
         file_id = path.basename(files.file.path);
         file_name = files.file.filename;
+        file_title = path.basename(file_name, path.extname(file_name));
         file_mime = files.file.mime;
       }
-      draggables[file_id] = { name: files.file.filename,
+      draggables[file_id] = { name: file_name,
                               mime: file_mime,
-                              title: fields.title,
+                              title: file_title,
                               top: 200,
                               left: 350 };
     }
