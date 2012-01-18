@@ -88,6 +88,7 @@ pre {
 
 .draggable pre {
   width: 388px;
+  font-size: 12px;
 }
 
 .draggable h2 {
