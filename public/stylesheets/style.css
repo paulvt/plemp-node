@@ -1,7 +1,10 @@
 /* CSS style file for Plemp! */
 
+html { height: 100%; }
+
 body {
   font-family: sans-serif;
+  height: 100% }
 }
 
 pre {
@@ -13,7 +16,6 @@ pre {
 #header {
   position: relative;
   border-bottom: thin solid gray;
-  height: 100%;
 }
 
 #header h1 {
