@@ -71,10 +71,18 @@ http://softwaremaniacs.org/soft/highlight/en/):
 These files are licensed under the 3-clause BSD license:
 https://github.com/isagalaev/highlight.js/blob/master/LICENSE.
 
-The following file is taken from the library (see
+The following file is the Jeditable jQuery plugin (see
 http://www.appelsiini.net/projects/jeditable):
 
 * public/javascript/jquery-jeditable.min.js
+
+This file is licensed under the MIT license:
+http://www.opensource.org/licenses/mit-license.php.
+
+The following file is the jQuery filedrop plugin (see
+https://github.com/weixiyen/jquery-filedrop):
+
+* public/javascript/jquery-filedrop.js
 
 This file is licensed under the MIT license:
 http://www.opensource.org/licenses/mit-license.php.
