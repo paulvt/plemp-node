@@ -210,6 +210,7 @@ app.post('/draggables', function(req, res) {
                               title: file_title,
                               top: 200,
                               left: 350 };
+      addEvent("add", { id: drag_id, info: draggables[drag_id] });
     }
   });
   res.redirect('home');
@@ -269,6 +270,7 @@ app.post('/draggables/:id', function(req, res) {
     console.log("Title update for draggable " + req.params.id + ": " +
                 req.body.title);
     drag.title = req.body.title;
+    addEvent("title update", { id: req.params.id, title: req.body.title });
     res.send(req.body.title);
   }
   else {
@@ -278,6 +280,7 @@ app.post('/draggables/:id', function(req, res) {
                 " top: " + req.body.top);
     drag.top = req.body.top;
     drag.left = req.body.left;
+    addEvent("reposition", { id: req.params.id, top: drag.top, left: drag.left });
   }
 });
 
@@ -292,8 +295,9 @@ app.del('/draggables/:id', function(req, res) {
       res.send(err);
       throw err;
     }
-    delete draggables[file_id];
-    console.log("Deleted draggable " + file_id);
+    delete draggables[drag_id];
+    console.log("Deleted draggable " + drag_id);
+    addEvent("delete", { id: req.params.id });
     res.send(true);
   });
 });
