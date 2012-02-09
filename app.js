@@ -135,8 +135,9 @@ function pause(timestamp, req, res, requestId) {
 // Retrieve the draggables info.
 var draggables = db.load();
 for (drag_id in draggables) {
-  if (!path.existsSync(__dirname + "/public/upload/" + drag_id)) {
-    console.log("Could not find draggable " + drag_id +
+  drag = draggables[drag_id];
+  if (!path.existsSync(__dirname + "/public/upload/" + drag.name)) {
+    console.log("Could not find file for draggable " + drag_id +
                 "; removing from database!");
     delete draggables[drag_id];
   }
@@ -206,14 +207,16 @@ app.post('/draggables', function(req, res) {
       next(err);
     }
     else {
-      var file_id, file_name, file_mime;
+      var drag_id, file_name, file_mime;
       if (fields.text) {
         md5sum = crypto.createHash('md5');
         md5sum = md5sum.update(fields.text).digest('hex');
-        file_id = md5sum + "." + fields.type;
-        file_name = "public/upload/" + file_id;
+        drag_id = md5sum
+        file_name = drag_id + "." + fields.type;
+        file_title = "Untitled";
         file_mime = mime.lookup(fields.type);
-        fs.writeFile(file_name, fields.text, function (err) {
+        fs.writeFile(__dirname + "/public/upload/" + file_name,
+                     fields.text, function (err) {
           if (err)
             throw err;
           console.log('Text saved to %s', file_name);
@@ -224,12 +227,13 @@ app.post('/draggables', function(req, res) {
       else {
         console.log('File %s uploaded to %s', files.file.filename,
                                               files.file.path);
-        file_id = path.basename(files.file.path);
-        file_name = files.file.filename;
-        file_title = path.basename(file_name, path.extname(file_name));
+        file_name = path.basename(files.file.path);
+        drag_id = path.basename(file_name, path.extname(file_name));
+        file_title = path.basename(files.file.filename,
+                                   path.extname(files.file.filename));
         file_mime = files.file.mime;
       }
-      draggables[file_id] = { name: file_name,
+      draggables[drag_id] = { name: file_name,
                               mime: file_mime,
                               title: file_title,
                               top: 200,
@@ -244,10 +248,10 @@ app.post('/draggables', function(req, res) {
 // generating code for draggable objects.
 app.get('/draggables/:id', function(req, res) {
   var drag_id = req.params.id;
-  var file_name = "../upload/" + req.params.id;
+  var drag = draggables[drag_id];
+  var file_name = "../upload/" + drag.name;
   console.log("Get draggable: " + drag_id);
   // Stuff taken from the Camping implementation.
-  var drag = draggables[drag_id];
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
   var title = drag.title || drag.name || 'Title not set';
   var content;
@@ -263,11 +267,11 @@ app.get('/draggables/:id', function(req, res) {
       content = '<audio src="' + file_name + '" controls="true"></audio>';
       break;
     case "text":
-      file_contents = fs.readFileSync("public/upload/" + drag_id);
+      file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name);
       content = '<pre>' + file_contents + '</pre>';
       break;
     case 'application': // FIXME: treat as code for now, but it is probably wrong
-      file_contents = fs.readFileSync("public/upload/" + drag_id);
+      file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name);
       content = '<pre><code class="' + drag.type + '">' + file_contents +
                      '</code></pre>';
       break;
@@ -311,13 +315,15 @@ app.post('/draggables/:id', function(req, res) {
 // Draggable removal controller: removes the specific draggable from the
 // database.
 app.del('/draggables/:id', function(req, res) {
-  var file_id = req.params.id;
-  fs.unlink("public/upload/" + file_id, function(err) {
+  var drag_id = req.params.id;
+  var drag = draggables[drag_id];
+  fs.unlink(__dirname + "/public/upload/" + drag.name, function(err) {
     if (err) {
-      console.log("Something went wrong while deleting " +
-                  file_id + ": " + err);
+      console.log("Something went wrong while deleting draggable " +
+                  drag_id + ": " + err);
       res.send(err);
       throw err;
+      return;
     }
     delete draggables[drag_id];
     console.log("Deleted draggable " + drag_id);
