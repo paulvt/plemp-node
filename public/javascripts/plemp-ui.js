@@ -39,17 +39,16 @@ $(document).ready(function() {
 
   // Populate the canvas with the draggables.
   $.get("draggables", function(data) {
-    $.each(data, function(drag_id, drag_info) {
-       $.get("draggables/" + drag_id, function(data) {
-         $("#draggables").append(data);
-         // Assume we have appended one draggable here:
-         $(".draggable").last().plempable(drag_info);
-       });
+    var timestamp = data.timestamp;
+
+    // Retrieve each draggable from the list and add it to the canvas.
+    $.each(data.list, function(drag_id, drag_info) {
+      add_draggable_to_canvas(drag_id, drag_info);
     });
   }, "json");
 });
 
-// Callback functions.
+// Callback functions
 
 // Show the add dialog with a visual effect.
 function show_add_dialog() {
@@ -63,13 +62,28 @@ function hide_add_dialog() {
   });
 }
 
-// Delete a draggable on the server; remove it with a visual effect.
+// Add a draggable element to the canvas.
+function add_draggable_to_canvas(drag_id, drag_info) {
+   $.get("draggables/" + drag_id, function(data) {
+     $("#draggables").append(data);
+     // Assume we have appended a signle draggable here:
+     $(".draggable").last().plempable(drag_info);
+   });
+}
+
+// Delete a draggable element from the canvas.
+function delete_draggable_from_canvas(drag_id) {
+  $("#draggables #" + drag_id).hide('fade', 'slow', function() {
+    element.remove();
+  });
+}
+
+// Delete a draggable on the server.
 function delete_draggable(event) {
   drag_id = event.data.id;
   $.post("draggables/" + drag_id, {"_method": "delete"}, function(data) {
     if (data) {
-      event.data.element.hide('fade', 'slow', function() {
-        event.data.element.remove () });
+      delete_draggable_from_canvas(drag_id);
     }
   }, "json");
 }
