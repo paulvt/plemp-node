@@ -13,11 +13,124 @@ var express = require("express")
   , fs = require('fs')
   , path = require('path')
   , crypto = require("crypto")
-  , mime = require("mime");
+  , mime = require("mime")
+  , url = require("url");
 
 // Set up the Node Express application.
 var app = express.createServer(form({ keepExtensions: true,
                                       uploadDir: __dirname + '/public/upload' }));
+
+// List of events.
+var events = [];
+// List of deferred requests/connections.
+var defers = [];
+// Maximum age of events (in seconds).
+var maxAge = 3600;
+// Request sequence number.
+var lastRequestId = 0;
+
+// Return the current time time in milliseconds.
+function currentTimestamp() {
+  return new Date().getTime();
+}
+
+// Compacts an array by removing all undefined values.
+function compact(arr) {
+  if (!arr) return null;
+
+  var i, data = [];
+  for (i = 0; i < arr.length; i++) {
+    if (arr[i]) data.push(arr[i]);
+  }
+  return data;
+}
+
+// Add a new event with the given type and optional data.
+function addEvent(type, data) {
+  var event = { type: type,
+                timestamp: currentTimestamp() }
+  if (data) event.data = data;
+
+  events.push(event);
+  console.log("[P] " + JSON.stringify(event));
+  // Notify deferred connections that there is something new.
+  notify();
+}
+
+// Find the next event in the list of events after the optional timestamp.
+// Expires events that are older than the maximum age (maxAge).
+function nextEvent(timestamp) {
+  if (!events) return null;
+  if (!timestamp) timestamp = 0;
+
+  var event, nEvent, i;
+  var minTimestamp = currentTimestamp() - maxAge * 1000;
+  for (i = 0; i < events.length; i++) {
+    event = events[i];
+
+    // Check if event is expired.
+    if (event.timestamp < minTimestamp) {
+      console.log("[.] expired: " + JSON.stringify(event));
+      delete events[i];
+      continue;
+    }
+    // Check if event is newer.
+    if (event.timestamp > timestamp) {
+      console.log("[.] next event after timestamp " + timestamp + ": " +
+                  JSON.stringify(event));
+      nEvent = event;
+      break;
+    }
+  }
+  // Compact the list of events.
+  events = compact(events);
+  return nEvent;
+}
+
+// Notify all deferred connections of their respect nextEvent.
+function notify() {
+  if (!defers) return;
+
+  var i, ctx, event;
+  for (i = 0; i < defers.length; i++) {
+    ctx = defers[i];
+
+    if (!ctx.req) {
+      delete defers[i];
+      continue;
+    }
+
+    event = nextEvent(ctx.timestamp);
+    if (event) {
+      ctx.req.resume();
+      ctx.res.send(event);
+      ctx.res.end();
+      delete defers[i];
+      console.log("[" + ctx.id + "] sent " + JSON.stringify(event));
+    }
+  }
+  // Compact the list of deferred connections.
+  defers = compact(defers);
+}
+
+// Save and pause the request.
+function pause(timestamp, req, res, requestId) {
+  var ctx = { id: requestId,
+              timestamp: timestamp,
+              req: req,
+              res: res };
+  defers.push(ctx);
+
+  req.connection.setTimeout(600 * 1000);
+  req.connection.on('timeout', function() {
+    ctx.req = null;
+    ctx.res = null;
+    console.log("[" + requestId, "] timeout");
+  });
+
+  req.pause();
+  console.log("[" + requestId + "] paused");
+}
 
 // Retrieve the draggables info.
 var draggables = db.load();
