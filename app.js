@@ -159,10 +159,33 @@ app.configure('production', function() {
   app.use(express.errorHandler());
 });
 
-
 // Server the main index file statically for now.
 app.get('/', function(req, res) {
   res.redirect('/index.html');
+});
+
+// The events controller: accessed through AJAX long-poll requests by the
+// main page for getting new events.
+app.get('/events', function(req, res) {
+  var u = url.parse(req.url, true);
+
+  if (!u.query) {
+    res.send(null, 400);
+    return;
+  }
+
+  var timestamp = u.query.timestamp || 0,
+      requestId = lastRequestId++,
+      event = nextEvent(timestamp);
+
+  if (!event) {
+    pause(timestamp, req, res, requestId);
+  }
+  else {
+    res.send(event);
+    res.end();
+    console.log("[" + requestId + "] direct sent " + JSON.stringify(event));
+  }
 });
 
 // The retrieval controller: accessed through AJAX requests by the main
