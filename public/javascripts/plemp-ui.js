@@ -45,6 +45,9 @@ $(document).ready(function() {
     $.each(data.list, function(drag_id, drag_info) {
       add_draggable_to_canvas(drag_id, drag_info);
     });
+
+    // Start a (long-poll) loop for update events from the server.
+    poll_server(timestamp);
   }, "json");
 });
 
@@ -101,6 +104,37 @@ function raise_draggable(event) {
 // Update the position of a draggable on the server.
 function update_drag_info(event, ui) {
   $.post("draggables/" + ui.helper.context.id, ui.position, "json");
+}
+
+// Poll for server events via AJAX.
+function poll_server(timestamp) {
+  $.ajax({ url: "events?timestamp=" + timestamp,
+           success: handle_server_event,
+           error: function() { poll_server(timestamp) }, // FIXME; handle properly!
+           dataType: "json", timeout: 60000 });
+};
+
+// Handle server events {
+function handle_server_event(event) {
+  switch(event.type) {
+    case "reposition":
+      $("#draggables #" + event.data.id).animate({ top: event.data.top,
+                                                   left: event.data.left });
+      break;
+    case "title update":
+      $("#draggables #" + event.data.id + " h2 .title").text(event.data.title);
+      break;
+    case "add":
+      add_draggable_to_canvas(event.data.id, event.data.info);
+      break;
+    case "delete":
+      delete_draggable_from_canvas(event.data.id);
+      break;
+    default:
+      console.log("Unsupported event type!");
+      console.log(event);
+  }
+  poll_server(event.timestamp);
 }
 
 // Handle the Escape and Plus keys for hiding/showing the add dialog.
