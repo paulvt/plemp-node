@@ -192,7 +192,8 @@ app.get('/events', function(req, res) {
 // page for getting/setting the state (positions) of the draggables.
 app.get('/draggables', function(req, res) {
   // Retrieve the current status of the draggables and return in JSON format.
-  res.send(draggables);
+  res.send({ timestamp: currentTimestamp(),
+             list: draggables });
 });
 
 // The upload controller: handles uploads from the main site.  This can
