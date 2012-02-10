@@ -207,9 +207,9 @@ app.post('/draggables', function(req, res) {
       next(err);
     }
     else {
-      var drag_id, file_name, file_mime;
+      var drag_id, file_name, file_mime, file_title;
       if (fields.text) {
-        md5sum = crypto.createHash('md5');
+        var md5sum = crypto.createHash('md5');
         md5sum = md5sum.update(fields.text).digest('hex');
         drag_id = md5sum
         file_name = drag_id + "." + fields.type;
