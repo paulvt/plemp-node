@@ -125,7 +125,7 @@ function pause(timestamp, req, res, requestId) {
   req.connection.on('timeout', function() {
     ctx.req = null;
     ctx.res = null;
-    console.log("[" + requestId, "] timeout");
+    console.log("[" + requestId + "] timed out");
   });
 
   req.pause();
