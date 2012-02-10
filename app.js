@@ -231,7 +231,7 @@ app.post('/draggables', function(req, res) {
         drag_id = path.basename(file_name, path.extname(file_name));
         file_title = path.basename(files.file.filename,
                                    path.extname(files.file.filename));
-        file_mime = files.file.mime;
+        file_mime = files.file.mime || "application/octet-stream";
       }
       draggables[drag_id] = { name: file_name,
                               mime: file_mime,
