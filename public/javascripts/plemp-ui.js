@@ -37,6 +37,16 @@ $(document).ready(function() {
     });
   };
 
+  // For drag & drop file uploading via the filedrop jQuery plugin and HTML5.
+  $("body").filedrop({ url: '/draggables', 
+                       paramname: 'file',
+                       data: { type: 'dnd' },
+                       maxfiles: 1,
+                       maxfilesize: 50,
+                       error: function(err, file) { console.log(err, file); },
+                       afterAll: function() { window.location.reload(true) }
+                     });
+
   // Populate the canvas with the draggables.
   $.get("draggables", function(data) {
     var timestamp = data.timestamp;

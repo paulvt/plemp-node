@@ -239,9 +239,16 @@ app.post('/draggables', function(req, res) {
                               top: 200,
                               left: 350 };
       addEvent("add", { id: drag_id, info: draggables[drag_id] });
+      // If this was a drag & drop upload, do not redirect to /.
+      if (fields.type == 'dnd') {
+        res.send(true);
+        res.end();
+      }
+      else {
+        res.redirect('home');
+      }
     }
   });
-  res.redirect('home');
 });
 
 // The draggable controller: provides direct access to the HTML
