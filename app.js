@@ -34,6 +34,15 @@ function currentTimestamp() {
   return new Date().getTime();
 }
 
+// Escape the HTML.
+function escapeHTML(text) {
+  return text.replace(/&/g,'&amp;')
+             .replace(/</g,'&lt;')
+             .replace(/>/g,'&gt;')
+             .replace(/"/g,'&quot;')
+             .replace(/'/g,'&#039;');
+}
+
 // Compacts an array by removing all undefined values.
 function compact(arr) {
   if (!arr) return null;
@@ -274,12 +283,13 @@ app.get('/draggables/:id', function(req, res) {
       content = '<audio src="' + file_name + '" controls="true"></audio>';
       break;
     case "text":
-      file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name);
-      content = '<pre>' + file_contents + '</pre>';
+      file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name, 'utf8');
+      content = '<pre>' + escapeHTML(file_contents) + '</pre>';
       break;
     case 'application': // FIXME: treat as code for now, but it is probably wrong
-      file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name);
-      content = '<pre><code class="' + drag.type + '">' + file_contents +
+      file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name, 'utf8');
+      content = '<pre><code class="' + drag.type + '">' +
+                     escapeHTML(file_contents) +
                      '</code></pre>';
       break;
     default:
