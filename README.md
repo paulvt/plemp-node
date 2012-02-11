@@ -9,13 +9,9 @@ Features
 
 * Adding content by means of typing/pasting text
 * Uploading of image/music/video/code/text files
-* (Re)arranging of the files (not yet persistent cross sessions)
+* (Re)arranging of the files
 * Some visual effects for eye candy purposes
 * Syntax highlighting of source code files
-
-The following feature is planned but has not been ported from the previous
-Camping/Ruby application yet:
-
 * Distributed management of the arrangement, i.e. everybody viewing the
   Plemp page will (with some delay) see the same arrangement
 
