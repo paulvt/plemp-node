@@ -222,7 +222,7 @@ app.post('/draggables', function(req, res) {
         md5sum = md5sum.update(fields.text).digest('hex');
         drag_id = md5sum
         file_name = drag_id + "." + fields.type;
-        file_title = "Untitled";
+        file_title = fields.title ||  "Untitled";
         file_mime = mime.lookup(fields.type);
         fs.writeFile(__dirname + "/public/upload/" + file_name,
                      fields.text, function (err) {
@@ -238,7 +238,8 @@ app.post('/draggables', function(req, res) {
                                               files.file.path);
         file_name = path.basename(files.file.path);
         drag_id = path.basename(file_name, path.extname(file_name));
-        file_title = path.basename(files.file.filename,
+        file_title = fields.title ||
+                     path.basename(files.file.filename,
                                    path.extname(files.file.filename));
         file_mime = files.file.mime || "application/octet-stream";
       }
