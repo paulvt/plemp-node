@@ -1,0 +1,42 @@
+Plemp! News
+===========
+
+Version 0.4
+-----------
+
+The last missing feature with respect to the original Plemp!  is added:
+
+* Support multiple clients at once that can see each other's changes in
+  (almost) real time
+
+New features are:
+
+* Support for uploads via drag & drop
+* Style tweaks
+* Fixed: escape HTML symbols in text
+* Fixed: properly set titles from the form
+* Many other small fixes
+
+Version 0.2
+-----------
+
+Implemented many features that where still missing with respect to the
+original version of Plemp!
+
+* Allow for the deletion of items
+* Support for music/video/code next to normal text files
+* Keyboard support (Plus/Escape) for showing/hiding the upload dialog
+
+New features are:
+
+* Raise items on click
+* Tweaked dragging feel
+* Added place holder for comments
+* Make titles editable
+* Syntax highlighting
+
+
+Version 0.1
+-----------
+
+Initial version; rewrite based on node.js.
