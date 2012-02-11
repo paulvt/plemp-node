@@ -44,8 +44,7 @@ $(document).ready(function() {
                        data: { type: 'dnd' },
                        maxfiles: 1,
                        maxfilesize: 50,
-                       error: function(err, file) { console.log(err, file); },
-                       afterAll: function() { window.location.reload(true) }
+                       error: function(err, file) { console.log(err, file); }
                      });
 
   // Populate the canvas with the draggables.
