@@ -43,10 +43,11 @@ Run from the command line:
 
 and head over to http://localhost:3300/ to view and use the Plemp! canvas.
 
-Files can be upload or text can be pasted using the Add/Upload Dialog
+Files can be uploaded or text can be pasted using the Add/Upload Dialog
 invoked by pressing the Plus key or the Plus button in the top-right
-corner.  Once uploaded, the objects can be arranged by dragging them
-around.
+corner.  When your browser supports it, files can also be uploaded by
+dragging it and dropping it on the canvas.
+Once uploaded, the objects can be arranged by dragging them around.
 
 License
 -------
