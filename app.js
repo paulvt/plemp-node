@@ -198,6 +198,14 @@ app.get('/events', function(req, res) {
   }
 });
 
+// The download controller: provides access to the uploaded files but ensures
+// that they are downloaded by the client.
+app.get('/download/:id', function(req, res) {
+  var drag_id = req.params.id;
+  console.log("Provide download for draggable " + drag_id);
+  res.download(__dirname + "/public/upload/" + drag.name);
+});
+
 // The retrieval controller: accessed through AJAX requests by the main
 // page for getting/setting the state (positions) of the draggables.
 app.get('/draggables', function(req, res) {
@@ -301,7 +309,8 @@ app.get('/draggables/:id', function(req, res) {
   res.send('<div class="draggable" id="' + drag_id + '" ' +
                 'style="' + default_style + '">' +
              '<h2><span class="title">' + title + '</span>' +
-                  '<div class="delete">X</div>' +
+                  '<div class="delete" title="Delete…">&#10799;</div>' +
+                  '<div class="download" title="Download…">&#8595;</div>' +
              '</h2>' + content + '<div class="comments"></div>' +
            '</div>');
 });
