@@ -35,6 +35,7 @@ $(document).ready(function() {
     this.find("pre code").each(function(idx, elem) {
       hljs.highlightBlock(elem, '  ');
     });
+    return $(this);
   };
 
   // For drag & drop file uploading via the filedrop jQuery plugin and HTML5.
