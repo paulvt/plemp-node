@@ -10,8 +10,8 @@
 var express = require("express")
   , db = require("./db")
   , form = require("connect-form")
-  , fs = require('fs')
-  , path = require('path')
+  , fs = require("fs")
+  , path = require("path")
   , crypto = require("crypto")
   , mime = require("mime")
   , url = require("url");
@@ -36,11 +36,11 @@ function currentTimestamp() {
 
 // Escape the HTML.
 function escapeHTML(text) {
-  return text.replace(/&/g,'&amp;')
-             .replace(/</g,'&lt;')
-             .replace(/>/g,'&gt;')
-             .replace(/"/g,'&quot;')
-             .replace(/'/g,'&#039;');
+  return text.replace(/&/g, '&amp;')
+             .replace(/</g, '&lt;')
+             .replace(/>/g, '&gt;')
+             .replace(/"/g, '&quot;')
+             .replace(/'/g, '&#039;');
 }
 
 // Compacts an array by removing all undefined values.
@@ -57,7 +57,7 @@ function compact(arr) {
 // Add a new event with the given type and optional data.
 function addEvent(type, data) {
   var event = { type: type,
-                timestamp: currentTimestamp() }
+                timestamp: currentTimestamp() };
   if (data) event.data = data;
 
   events.push(event);
@@ -105,6 +105,7 @@ function notify() {
     ctx = defers[i];
 
     if (!ctx.req) {
+      // Apparently this connectioned was timed out.
       delete defers[i];
       continue;
     }
@@ -144,7 +145,8 @@ function pause(timestamp, req, res, requestId) {
 // Retrieve the draggables info.
 var draggables = db.load();
 for (drag_id in draggables) {
-  drag = draggables[drag_id];
+  var drag = draggables[drag_id];
+
   if (!path.existsSync(__dirname + "/public/upload/" + drag.name)) {
     console.log("Could not find file for draggable " + drag_id +
                 "; removing from database!");
@@ -278,7 +280,7 @@ app.get('/draggables/:id', function(req, res) {
   console.log("Get draggable: " + drag_id);
   // Stuff taken from the Camping implementation.
   var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;display:none;";
-  var title = drag.title || drag.name || 'Title not set';
+  var title = drag.title || drag.name || 'Untitled';
   var content;
   var mime_type = drag.mime.split("/");
   switch (mime_type[0]) {

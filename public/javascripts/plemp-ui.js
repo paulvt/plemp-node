@@ -77,11 +77,11 @@ function hide_add_dialog() {
 
 // Add a draggable element to the canvas.
 function add_draggable_to_canvas(drag_id, drag_info) {
-   $.get("draggables/" + drag_id, function(data) {
-     $("#draggables").append(data);
-     // Assume we have appended a signle draggable here:
-     $(".draggable").last().plempable(drag_info).fadeIn('slow');
-   });
+  $.get("draggables/" + drag_id, function(data) {
+    $("#draggables").append(data);
+    // Assume we have appended a signle draggable here:
+    $(".draggable").last().plempable(drag_info).fadeIn('slow');
+  });
 }
 
 // Delete a draggable element from the canvas.
