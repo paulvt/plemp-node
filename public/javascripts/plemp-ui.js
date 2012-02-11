@@ -21,8 +21,8 @@ $(document).ready(function() {
         .hover(function() { $(this).find(".comments").fadeIn(); },
                function() { $(this).find(".comments").fadeOut(); });
     this.find(".delete").click({ id: this.attr("id"),
-                                 element: this },
-                               delete_draggable);
+                                 element: this }, delete_draggable);
+    this.find(".download").click({ id: this.attr("id") }, download_draggable);
     this.find(".title").editable('draggables/' + this.attr("id"),
                                  { tooltip: "Click to edit…",
                                    name: 'title',
@@ -99,6 +99,12 @@ function delete_draggable(event) {
       delete_draggable_from_canvas(drag_id);
     }
   }, "json");
+}
+
+// Download a draggable from the server.
+function download_draggable(event) {
+  event.preventDefault();
+  window.open("download/" + event.data.id);
 }
 
 // Raise the draggable to the foreground.

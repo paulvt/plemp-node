@@ -108,6 +108,7 @@ pre {
   font-weight: bold;
 }
 
+.draggable h2 .download,
 .draggable h2 .delete {
   width: auto;
   float: right;
@@ -116,7 +117,12 @@ pre {
   color: #ccc;
 }
 
-.draggable h2 .delete:hover {
+.draggable h2 .download {
+  margin-right: 4px;
+  padding: 0px 4px;
+}
+
+.draggable h2 :hover {
   color: #000;
   cursor: pointer;
 }
