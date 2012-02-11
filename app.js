@@ -269,7 +269,7 @@ app.get('/draggables/:id', function(req, res) {
   var file_name = "../upload/" + drag.name;
   console.log("Get draggable: " + drag_id);
   // Stuff taken from the Camping implementation.
-  var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;";
+  var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;display:none;";
   var title = drag.title || drag.name || 'Title not set';
   var content;
   var mime_type = drag.mime.split("/");
