@@ -23,10 +23,8 @@
         <div id="add">+</div>
       </h1>
     </div>
-    <div id="add_dialog" style="display:none;">
-      <div class="background"></div>
+    <div id="add_dialog" title="Plemp it!">
       <form method="post" action="/draggables" enctype="multipart/form-data" id="add_form">
-        <h2>Plemp it!</h2>
         <label for="new_title">Title:</label>
         <input name="title" id="new_title" width="200">
         <p>Scribble something below:
@@ -58,10 +56,6 @@
           <span>&#8230; or upload a file:</span>
           <input type="file" name="file" id="file"/>
         </p>
-        <div class="right">
-          <input type="button" id="cancel" value="Cancel"/>
-          <input type="submit" value="Upload!"/>
-        </div>
       </form>
     </div>
     <div id="draggables"></div>
