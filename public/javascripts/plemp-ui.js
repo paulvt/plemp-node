@@ -67,7 +67,7 @@ $(document).ready(function() {
                        data: { type: 'dnd' },
                        maxfiles: 1,
                        maxfilesize: 50,
-                       error: function(err, file) { console.log(err, file); }
+                       error: handle_filedrop_error
                      });
 
   // Populate the canvas with the draggables.
@@ -85,7 +85,6 @@ $(document).ready(function() {
 });
 
 // Callback functions
-
 
 // Clear the form of the add dialog.
 function clear_add_dialog_form() {
@@ -162,7 +161,7 @@ function poll_server(timestamp) {
            dataType: "json", timeout: 60000 });
 };
 
-// Handle server events {
+// Handle server events.
 function handle_server_event(event) {
   switch(event.type) {
     case "reposition":
@@ -183,6 +182,36 @@ function handle_server_event(event) {
       console.log(event);
   }
   poll_server(event.timestamp);
+}
+
+// Handle filedrop (drag & drop uploading) errors.
+function handle_filedrop_error(err, file) {
+  switch(err) {
+    case 'BrowserNotSupported':
+        flash_message("Your browser does not support drag & drop! " +
+                       "Please click this button to upload:");
+        break;
+    case 'TooManyFiles':
+        // user uploaded more than 'maxfiles'
+        flash_message("You can only upload a single file at once!");
+        break;
+    case 'FileTooLarge':
+        // program encountered a file whose size is greater than 'maxfilesize'
+        // FileTooLarge also has access to the file which was too large
+        // use file.name to reference the filename of the culprit file
+        flash_message("The file is too large! " +
+                      "Ensure it is smaller than than 50MB.");
+        break;
+    default:
+        console.log(err, file);
+        break;
+  }
+}
+
+// Flash some messsage.
+function flash_message(msg) {
+  $("#message").html(msg)
+  $("#message").fadeIn('slow').delay(5000).fadeOut('fast');
 }
 
 // Handle the Escape and Plus keys for hiding/showing the add dialog.
