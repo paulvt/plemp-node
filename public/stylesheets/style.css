@@ -29,9 +29,20 @@ pre {
   float: right;
   cursor: pointer;
   color: #ccc;
-  font-size: 30px;
+  height: 28px;
 }
 #header #add:hover { color: #000; }
+#header #message {
+  display: none;
+  float: right;
+  margin: 3px;
+  margin-right: 12px;
+  padding: 3px;
+  border: thin solid #888;
+  background-color: #eee;
+  font-size: 14px;
+  font-weight: normal;
+}
 
 #add_dialog { margin-top: 16px; }
 
