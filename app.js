@@ -204,6 +204,7 @@ app.get('/events', function(req, res) {
 // that they are downloaded by the client.
 app.get('/download/:id', function(req, res) {
   var drag_id = req.params.id;
+  var drag = draggables[drag_id];
   console.log("Provide download for draggable " + drag_id);
   res.download(__dirname + "/public/upload/" + drag.name);
 });
