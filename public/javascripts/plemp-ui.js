@@ -20,9 +20,8 @@ $(document).ready(function() {
         .click(raise_draggable)
         .hover(function() { $(this).find(".comments").fadeIn(); },
                function() { $(this).find(".comments").fadeOut(); });
-    this.find(".delete").click({ id: this.attr("id"),
-                                 element: this }, delete_draggable);
     this.find(".download").click({ id: this.attr("id") }, download_draggable);
+    this.find(".delete").click({ id: this.attr("id") }, confirm_delete_draggable);
     this.find(".title").editable('draggables/' + this.attr("id"),
                                  { tooltip: "Click to edit…",
                                    name: 'title',
@@ -38,8 +37,32 @@ $(document).ready(function() {
     return $(this);
   };
 
+  // Set up the dialogs.
+  $("#add_dialog").dialog({ autoOpen: false,
+                            width: "auto",
+                            show: "fade",
+                            hide: "fade",
+                            resizable: false,
+                            modal: true,
+                            close: clear_add_dialog_form,
+                            buttons: { "Cancel":  hide_add_dialog,
+                                       "Upload!": function() {
+                                         $("#add_form")[0].submit();
+                                       }}});
+  $("#delete_confirm").dialog({ autoOpen: false,
+                                show: "fade",
+                                hide: "fade",
+                                resizable: false,
+                                buttons: { "Cancel": function() {
+                                             $(this).dialog("close");
+                                           },
+                                           "Delete": function() {
+                                             $(this).dialog("close");
+                                             delete_draggable($(this).data("id"));
+                                           }}});
+
   // For drag & drop file uploading via the filedrop jQuery plugin and HTML5.
-  $("body").filedrop({ url: '/draggables', 
+  $("body").filedrop({ url: '/draggables',
                        paramname: 'file',
                        data: { type: 'dnd' },
                        maxfiles: 1,
@@ -63,16 +86,20 @@ $(document).ready(function() {
 
 // Callback functions
 
+
+// Clear the form of the add dialog.
+function clear_add_dialog_form() {
+  $("#add_form")[0].reset();
+}
+
 // Show the add dialog with a visual effect.
 function show_add_dialog() {
-  $('#add_dialog').fadeIn('slow');
+  $("#add_dialog").dialog("open");
 }
 
 // Hide the add dialog with a visual effect and reset the form when finished.
 function hide_add_dialog() {
-  $("#add_dialog").fadeOut('fast', function() {
-    $("#add_form")[0].reset();
-  });
+  $("#add_dialog").dialog("close");
 }
 
 // Add a draggable element to the canvas.
@@ -87,17 +114,22 @@ function add_draggable_to_canvas(drag_id, drag_info) {
 // Delete a draggable element from the canvas.
 function delete_draggable_from_canvas(drag_id) {
   $("#draggables #" + drag_id).hide('fade', 'slow', function() {
-    element.remove();
+    $(this).remove();
   });
 }
 
-// Delete a draggable on the server.
-function delete_draggable(event) {
-  drag_id = event.data.id;
+// Confirm the deletion of the draggable using the confirm dialog.
+function confirm_delete_draggable(event) {
+  event.preventDefault();
+  $("#delete_confirm").data("id", event.data.id)
+                      .dialog("open");
+}
+
+// Deletion has been confirmed, delete the draggable from the server and
+// then the canvas.
+function delete_draggable(drag_id) {
   $.post("draggables/" + drag_id, {"_method": "delete"}, function(data) {
-    if (data) {
-      delete_draggable_from_canvas(drag_id);
-    }
+    if (data) delete_draggable_from_canvas(drag_id);
   }, "json");
 }
 
