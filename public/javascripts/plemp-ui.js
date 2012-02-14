@@ -193,8 +193,19 @@ function update_drag_info(event, ui) {
 function poll_server(timestamp) {
   $.ajax({ url: "events?timestamp=" + timestamp,
            success: handle_server_event,
-           error: function() { poll_server(timestamp) }, // FIXME; handle properly!
-           dataType: "json", timeout: 60000 });
+           error: function(event) {
+             switch (event.statusText) {
+               case "timeout":
+                 // Got a timeout, retry with the same timestamp.
+                 poll_server(timestamp);
+                 break;
+               case "abort":
+               case "error":
+                 // Lost connection to the server for some reason!
+                 set_message("Lost contact to the server somehow! " +
+                             "Reload this page to try to fix that.");
+            }},
+           dataType: "json", timeout: 60 * 1000 });
 };
 
 // Handle server events.
