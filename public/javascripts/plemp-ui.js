@@ -60,7 +60,7 @@ $(document).ready(function() {
     // FIXME: actually get the comments!
     //this.find(".comments").text("Comments (0)");
     // Fix the height of the pre block.  FIXME: can this be improved?
-    this.find("pre").css({ height: (this.height() - 80) + "px" });
+    this.find("pre").css({ height: (this.height() - 50) + "px" });
     // Highlight contained code in the pre block.
     this.find("pre code").each(function(idx, elem) {
       hljs.highlightBlock(elem, '  ');
@@ -207,7 +207,7 @@ function handle_server_event(event) {
     case "resize":
       drag.animate({ width: event.data.width, height: event.data.height })
           // Fix the height of the pre.  FIXME: can this be improved?
-          .find("pre").animate({ height: event.data.height - 80 });
+          .find("pre").animate({ height: event.data.height - 50 });
       break;
     case "title update":
       $("#draggables #" + event.data.id + " h2 .title").text(event.data.title);
