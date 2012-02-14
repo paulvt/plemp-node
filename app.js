@@ -330,6 +330,10 @@ app.get('/draggables/:id', function(req, res) {
 // i.e. the global state.
 app.post('/draggables/:id', function(req, res) {
   var drag = draggables[req.params.id];
+  if (!drag) {
+    res.send(false);
+    return;
+  }
   if (req.body.title) {
     // It's a title update!
     console.log("Title update for draggable " + req.params.id + ": " +
