@@ -292,10 +292,14 @@ app.get('/draggables/:id', function(req, res) {
       content = '<img src="' + file_name + '"></img>';
       break;
     case "video":
-      content = '<video src="' + file_name + '" controls="true"></video>';
+      content = '<video src="' + file_name + '" controls>' +
+                '<p>Your browser does not support HTML5 video.</p>' +
+                '</video>';
       break;
     case "audio":
-      content = '<audio src="' + file_name + '" controls="true"></audio>';
+      content = '<audio src="' + file_name + '" controls>' +
+                '<p>Your browser does not support HTML5 video.</p>' +
+                '</audio>'
       break;
     case "text":
       file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name, 'utf8');
