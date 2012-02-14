@@ -70,7 +70,6 @@ pre {
 .draggable pre {
   font-size: 12px;
   overflow: auto;
-  max-height: 300px;
 }
 
 .draggable h2 {

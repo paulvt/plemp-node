@@ -12,14 +12,43 @@ $(document).ready(function() {
   // The plempable jQuery plugin containing most of the Plemp! UI
   // functionality.
   $.fn.plempable = function(data) {
+    var type = data.mime.split("/")[0];
     this.draggable({ stack: ".draggable",
                      containment: "window",
                      cancel: "audio, video",
                      distance: 10,
                      stop: update_drag_info })
-        .click(raise_draggable)
-        .hover(function() { $(this).find(".comments").fadeIn(); },
-               function() { $(this).find(".comments").fadeOut(); });
+        .click(raise_draggable);
+    // Make it resizable with parameters based on the type:
+    // FIXME: is there a better way than repeating the common options?
+    switch(type) {
+      case "image":
+      case "video":
+        this.resizable({ distance: 10,
+                         start: raise_draggable,
+                         stop: update_drag_info,
+                         handles: "se",
+                         minHeight: 250,
+                         aspectRatio: true });
+        break;
+      case "audio":
+        this.resizable({ distance: 10,
+                         start: raise_draggable,
+                         stop: update_drag_info,
+                         handles: "e",
+                         minWidth: 300 });
+        break;
+      case "text":
+      case "application":
+        this.resizable({ distance: 10,
+                         start: raise_draggable,
+                         stop: update_drag_info,
+                         handles: "se",
+                         minWidth: 300,
+                         minHeight: 150,
+                         alsoResize: "#" + this.attr("id") + " pre" });
+    }
+    // Configure events for child elements.
     this.find(".download").click({ id: this.attr("id") }, download_draggable);
     this.find(".delete").click({ id: this.attr("id") }, confirm_delete_draggable);
     this.find(".title").editable('draggables/' + this.attr("id"),
