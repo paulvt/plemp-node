@@ -257,7 +257,9 @@ app.post('/draggables', function(req, res, next) {
                               mime: file_mime,
                               title: file_title,
                               top: 200,
-                              left: 350 };
+                              left: 350,
+                              width: 400,
+                              height: 300 };
       addEvent("add", { id: drag_id, info: draggables[drag_id] });
       // If this was a drag & drop upload, do not redirect to /.
       if (fields.type == 'dnd') {
