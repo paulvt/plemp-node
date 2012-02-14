@@ -131,7 +131,7 @@ function pause(timestamp, req, res, requestId) {
               res: res };
   defers.push(ctx);
 
-  req.connection.setTimeout(600 * 1000);
+  req.connection.setTimeout(60 * 1000);
   req.connection.on('timeout', function() {
     ctx.req = null;
     ctx.res = null;
