@@ -220,10 +220,9 @@ app.get('/draggables', function(req, res) {
 // The upload controller: handles uploads from the main site.  This can
 // either be a file or some pasted text.  After upload the controler
 // redirects to the main page which includes the just uploaded file.
-app.post('/draggables', function(req, res) {
+app.post('/draggables', function(req, res, next) {
   req.form.complete(function(err, fields, files) {
     if (err) {
-      // FIXME: next is undefined!
       next(err);
     }
     else {
