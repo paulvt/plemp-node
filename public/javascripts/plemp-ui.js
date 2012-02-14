@@ -29,8 +29,10 @@ $(document).ready(function() {
                                    cancel: 'Cancel',
                                    style: 'inherit' });
     // FIXME: actually get the comments!
-    this.find(".comments").text("Comments (0)").hide();
-    // Highlight contained code.
+    //this.find(".comments").text("Comments (0)");
+    // Fix the height of the pre block.  FIXME: can this be improved?
+    this.find("pre").css({ height: (this.height() - 80) + "px" });
+    // Highlight contained code in the pre block.
     this.find("pre code").each(function(idx, elem) {
       hljs.highlightBlock(elem, '  ');
     });

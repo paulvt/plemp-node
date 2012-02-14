@@ -298,7 +298,7 @@ app.get('/draggables/:id', function(req, res) {
       file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name, 'utf8');
       content = '<pre>' + escapeHTML(file_contents) + '</pre>';
       break;
-    case 'application': // FIXME: treat as code for now, but it is probably wrong
+    case "application": // FIXME: treat as code for now, but it is probably wrong
       file_contents = fs.readFileSync(__dirname + "/public/upload/" + drag.name, 'utf8');
       content = '<pre><code class="' + drag.type + '">' +
                      escapeHTML(file_contents) +
@@ -314,7 +314,7 @@ app.get('/draggables/:id', function(req, res) {
              '<h2><span class="title">' + title + '</span>' +
                   '<div class="delete" title="Delete…">&#10799;</div>' +
                   '<div class="download" title="Download…">&#8595;</div>' +
-             '</h2>' + content + '<div class="comments"></div>' +
+             '</h2>' + content + '<div class="comments">Comments (0)</div>' +
            '</div>');
 });
 
