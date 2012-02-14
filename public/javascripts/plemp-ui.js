@@ -255,6 +255,12 @@ function flash_message(msg) {
   $("#message").fadeIn('slow').delay(5000).fadeOut('fast');
 }
 
+// Set some messsage (permanent version of flash_message).
+function set_message(msg) {
+  $("#message").html(msg)
+  $("#message").fadeIn('slow');
+}
+
 // Handle the Escape and Plus keys for hiding/showing the add dialog.
 function key_handler(event) {
   switch (event.keyCode) {
