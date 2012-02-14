@@ -118,3 +118,5 @@ pre {
 /* JQuery UI CSS overrides */
 
 .ui-widget { font-size: 100%; }
+
+.ui-resizable-handle { z-index: auto !important; }

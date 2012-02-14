@@ -181,7 +181,12 @@ function raise_draggable(event) {
 
 // Update the position of a draggable on the server.
 function update_drag_info(event, ui) {
-  $.post("draggables/" + ui.helper.context.id, ui.position, "json");
+  if (ui.size) {
+    $.post("draggables/" + ui.helper.context.id, ui.size, "json");
+  }
+  else {
+    $.post("draggables/" + ui.helper.context.id, ui.position, "json");
+  }
 }
 
 // Poll for server events via AJAX.
@@ -194,10 +199,15 @@ function poll_server(timestamp) {
 
 // Handle server events.
 function handle_server_event(event) {
+  var drag = $("#draggables #" + event.data.id);
   switch(event.type) {
     case "reposition":
-      $("#draggables #" + event.data.id).animate({ top: event.data.top,
-                                                   left: event.data.left });
+      drag.animate({ top: event.data.top, left: event.data.left });
+      break;
+    case "resize":
+      drag.animate({ width: event.data.width, height: event.data.height })
+          // Fix the height of the pre.  FIXME: can this be improved?
+          .find("pre").animate({ height: event.data.height - 80 });
       break;
     case "title update":
       $("#draggables #" + event.data.id + " h2 .title").text(event.data.title);
