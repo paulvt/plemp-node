@@ -280,7 +280,9 @@ app.get('/draggables/:id', function(req, res) {
   var file_name = "../upload/" + drag.name;
   console.log("Get draggable: " + drag_id);
   // Stuff taken from the Camping implementation.
-  var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;display:none;";
+  var default_style = "left:" + drag.left + "px;top:" + drag.top + "px;" +
+                      "width:" + drag.width + "px;height:" + drag.height + "px;" +
+                      "display:none;";
   var title = drag.title || drag.name || 'Untitled';
   var content;
   var mime_type = drag.mime.split("/");
@@ -332,13 +334,24 @@ app.post('/draggables/:id', function(req, res) {
     res.send(req.body.title);
   }
   else {
-    // Set the position for the file with the given ID.
-    console.log("Position update for draggable " + req.params.id + ";" +
-                " left: " + req.body.left +
-                " top: " + req.body.top);
-    drag.top = req.body.top;
-    drag.left = req.body.left;
-    addEvent("reposition", { id: req.params.id, top: drag.top, left: drag.left });
+    if (req.body.width) {
+      // Set the size for the file with the given ID.
+      console.log("Size update for draggable " + req.params.id + ";" +
+                  " width: " + req.body.width +
+                  " height: " + req.body.top);
+      drag.width = req.body.width;
+      drag.height = req.body.height;
+      addEvent("resize", { id: req.params.id, width: drag.width, height: drag.height });
+    }
+    else {
+      // Set the position for the file with the given ID.
+      console.log("Position update for draggable " + req.params.id + ";" +
+                  " left: " + req.body.left +
+                  " top: " + req.body.top);
+      drag.top = req.body.top;
+      drag.left = req.body.left;
+      addEvent("reposition", { id: req.params.id, top: drag.top, left: drag.left });
+    }
   }
 });
 
