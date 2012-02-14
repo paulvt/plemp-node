@@ -9,7 +9,7 @@ Features
 
 * Adding content by means of typing/pasting text
 * Uploading of image/music/video/code/text files
-* (Re)arranging of the files
+* (Re)arranging and resizing of the items
 * Some visual effects for eye candy purposes
 * Syntax highlighting of source code files
 * Distributed management of the arrangement, i.e. everybody viewing the
@@ -47,7 +47,8 @@ Files can be uploaded or text can be pasted using the Add/Upload Dialog
 invoked by pressing the Plus key or the Plus button in the top-right
 corner.  When your browser supports it, files can also be uploaded by
 dragging it and dropping it on the canvas.
-Once uploaded, the objects can be arranged by dragging them around.
+Once uploaded, the objects can be arranged by dragging them around and
+resized by using the resize handles.
 
 License
 -------
