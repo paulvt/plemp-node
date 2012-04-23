@@ -39,7 +39,7 @@ Usage
 
 Run from the command line:
 
-    $ node plemp.js
+    $ node app.js
 
 and head over to http://localhost:3300/ to view and use the Plemp! canvas.
 
